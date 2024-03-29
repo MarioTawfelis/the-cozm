@@ -113,19 +113,17 @@ const SuggestionItem = styled.div`
 
 
 const AddressForm = () => {
-  const [companyName, setCompanyName] = useState('');
-  // const [countries, setCountries] = useState<CountryData[]>([]);
-  const [isInputFocused, setIsInputFocused] = useState(false);
-  const [countryInput, setCountryInput] = useState('');
+  const [companyName, setCompanyName] = useState<string>('');
+  const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
+  const [countryInput, setCountryInput] = useState<string>('');
   const [countrySuggestions, setCountrySuggestions] = useState<CountryData[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<CountryData | null>(null);
   const [addresses, setAddresses] = useState<CompanyAddress[]>([]);
   const [selectedAddress, setSelectedAddress] = useState<CompanyAddress | null>(null);
-  const [streetNumber, setStreetNumber] = useState('');
-  const [streetName, setStreetName] = useState('');
-  const [city, setCity] = useState('');
-  const [postCode, setPostCode] = useState('');
-
+  const [streetNumber, setStreetNumber] = useState<string>('');
+  const [streetName, setStreetName] = useState<string>('');
+  const [city, setCity] = useState<string>('');
+  const [postCode, setPostCode] = useState<string>('');
 
   const [debouncedCountryInput] = useDebounce(countryInput, 500);
 
@@ -145,12 +143,6 @@ const AddressForm = () => {
     }
   }, [companyName, selectedCountry]);
 
-
-  const handleAddressChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const address = addresses[parseInt(event.target.value, 10)];
-    setSelectedAddress(address);
-  }
-
   useEffect(() => {
     if (selectedAddress !== null) {
       setCompanyName(selectedAddress.companyName)
@@ -160,7 +152,15 @@ const AddressForm = () => {
       setPostCode(selectedAddress.postCode);
     }
 
-  }, [selectedAddress])
+  }, [selectedAddress]);
+
+
+  const handleAddressChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const address = addresses[parseInt(event.target.value, 10)];
+    setSelectedAddress(address);
+  }
+
+
 
   const handleCountryInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCountryInput(event.target.value);
