@@ -1,4 +1,4 @@
-import DestinationAddressForm from "./components/UserQuestionnaire/DestinationAddressModal"
+import DestinationAddressForm from "./components/UserQuestionnaire/DestinationAddressForm"
 
 const App = () => {
 

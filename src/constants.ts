@@ -1,5 +1,7 @@
 export const apiBaseUrl = 'https://api.development.democozm.com/api';
 
+export const apiRequestVersion = 'CIBT';
+
 export const countries = [
   { uuid: '1', name: 'United States', code: 'US' },
   { uuid: '2', name: 'Canada', code: 'CA' },
