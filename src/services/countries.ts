@@ -25,12 +25,11 @@ const getAllCountries = async () => {
 
 // Temporary hack untill I figure out what's wrong with the API endpoint
 const searchCountries = async (searchTerm: string): Promise<CountryData []> => {
-  return new Promise<CountryData[]>(() => {
     const filteredCountries = countries.filter(country =>
       country.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
     return filteredCountries;
-  });
 };
 
 

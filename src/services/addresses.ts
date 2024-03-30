@@ -1,4 +1,4 @@
-import { apiBaseUrl } from '../constants';
+import { apiBaseUrl, apiRequestVersion } from '../constants';
 import { StoredAddress, CompanyAddress } from '../types';
 
 const transformAddresses = (address: StoredAddress): CompanyAddress => ({
@@ -11,21 +11,28 @@ const transformAddresses = (address: StoredAddress): CompanyAddress => ({
 });
 
 const fetchAddresses = async (country: string, company: string): Promise<CompanyAddress[]> => {
+  const encodedCountry = encodeURIComponent(country);
+  const encodedCompany = encodeURIComponent(company);
+
   try {
     const response = await fetch(
-      `${apiBaseUrl}/personas/address-search?country=${country}&name=${company}`, {
+      `${apiBaseUrl}/personas/address-search?country=${encodedCountry}&name=${encodedCompany}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Version': 'CIBT', 
+          'Version': `${apiRequestVersion}`, 
         },
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error(`API response was not ok: : ${response.status} ${response.statusText}`);
       }
 
     const data  = await response.json();
+
+    if (!Array.isArray(data)) {
+      throw new Error('Data format is incorrect, expected an array of addresses.');
+    }
 
     return data.map(transformAddresses);
   } catch (error) {

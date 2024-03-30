@@ -19,6 +19,7 @@ const AddressForm = () => {
   const [city, setCity] = useState<string>('');
   const [postCode, setPostCode] = useState<string>('');
 
+  // To avoid spam API calls while the user is typing 
   const [debouncedCountryInput] = useDebounce(countryInput, 500);
 
   useEffect(() => {
